@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lican.community.mapper.UserMapper">
+
+    <resultMap id="MyUser" type="com.lican.community.entity.UserEntity">
+        <id column="id" property="id"></id>
+        <result column="user_name" property="userName"></result>
+        <result column="password" property="password"></result>
+        <result column="salt" property="salt"></result>
+        <result column="email" property="email"></result>
+        <result column="type" property="type"></result>
+        <result column="status" property="status"></result>
+        <result column="activation_code" property="activationCode"></result>
+        <result column="header_url" property="headerUrl"></result>
+        <result column="create_time" property="createTime"></result>
+    </resultMap>
+
+    <sql id="UserFields">
+        id, user_name, password, salt, email, type, status, activation_code, header_url, create_time
+    </sql>
+
+    <select id="selectById" resultMap="MyUser">
+        select <include refid="UserFields"></include>
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="selectByName" resultMap="MyUser">
+        select <include refid="UserFields"></include>
+        from user
+        where user_name = #{userName}
+    </select>
+
+    <select id="selectByEmail" resultMap="MyUser">
+        select <include refid="UserFields"></include>
+        from user
+        where email = #{email}
+    </select>
+
+    <insert id="insertUser">
+        insert into user (user_name, password, salt, email, type, status, activation_code, header_url)
+        values(#{userName}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl})
+    </insert>
+
+    <update id="updateStatus">
+        update user set status = #{status} where id = #{id}
+    </update>
+
+    <update id="updateHeader">
+        update user set header_url = #{headerUrl} where id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        update user set password = #{password} where id = #{id}
+    </update>
+
+</mapper>
