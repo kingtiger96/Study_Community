@@ -21,19 +21,16 @@ public class LoginController implements CommunityConstant {
     private UserService userService;
 
     @RequestMapping(path = "/register", method = RequestMethod.GET)
-    @ResponseBody
     public String getRegisterPage(){
         return "/site/register";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    @ResponseBody
     public String getLoginPage(){
         return "/site/login";
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    @ResponseBody
     public String register(Model model, UserEntity user){
         Map<String, Object> map = userService.register(user);
         if(ObjectUtils.isEmpty(map)){
@@ -50,7 +47,6 @@ public class LoginController implements CommunityConstant {
     }
 
     @RequestMapping(path = "activation/{userId}/{code}", method = RequestMethod.GET)
-    @ResponseBody
     public String activation(Model modle, @PathVariable("userId") int userId, @PathVariable("code") String code){
         int result = userService.activation(userId,code);
         if(result== ACTIVATE_SUCCESS){
