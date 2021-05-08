@@ -42,3 +42,4 @@ mybatis:
 community:
   path:
     domain: http://localhost:8088
+    uploadPath: C:/Users/kingtiger/Desktop
