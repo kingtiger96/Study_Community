@@ -3,6 +3,8 @@ package com.lican.community.utils;
 import com.lican.community.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * 持有用户信息，用于代替session对象
  */

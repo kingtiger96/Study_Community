@@ -1,5 +1,6 @@
 package com.lican.community.controller;
 
+import com.lican.community.annotation.LoginRequired;
 import com.lican.community.entity.UserEntity;
 import com.lican.community.service.UserService;
 import com.lican.community.utils.CommunityUtils;
@@ -44,11 +45,13 @@ public class UserController {
     @Autowired
     private HostHolder hostHolder;
 
+    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage(){
         return "/site/setting";
     }
 
+    @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model){
         if(headerImage == null){
