@@ -55,7 +55,7 @@ public class LoginController implements CommunityConstant {
             model.addAttribute("target","/index");
             return "/site/operate-result";
         }else{
-            model.addAttribute("usernameMsg", user.getUserName());
+            model.addAttribute("usernameMsg", user.getUsername());
             model.addAttribute("passwordMsg",user.getPassword());
             model.addAttribute("emailMsg",user.getEmail());
             return "/site/register";
@@ -96,7 +96,7 @@ public class LoginController implements CommunityConstant {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public String login(String userName, String password, String code, boolean isRemembered, Model model, HttpServletResponse response, HttpSession session){
+    public String login(String username, String password, String code, boolean isRemembered, Model model, HttpServletResponse response, HttpSession session){
         String kaptcha = (String) session.getAttribute("kaptcha");
         System.out.println(kaptcha);
         if(StringUtils.isBlank(kaptcha) || StringUtils.isBlank(code) || !(kaptcha).equalsIgnoreCase(code)) {
@@ -105,7 +105,7 @@ public class LoginController implements CommunityConstant {
         }
 
         int expiredSeconds = isRemembered ? CommunityConstant.DEFAULT_EXPIRED_SECONDS : CommunityConstant.REMEMBER_EXPIRED_SECONDS;
-        Map<String, Object> map = userService.login(userName,password,expiredSeconds);
+        Map<String, Object> map = userService.login(username,password,expiredSeconds);
         
         if(map.containsKey("ticket")){
             Cookie cookie = new Cookie("ticket",map.get("ticket").toString());

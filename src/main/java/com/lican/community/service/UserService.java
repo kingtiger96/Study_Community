@@ -9,7 +9,7 @@ public interface UserService {
     UserEntity findUserById(int id);
     Map<String, Object> register(UserEntity u);
     int activation(int userId, String code);
-    Map<String, Object> login(String userName, String password, int expired);
+    Map<String, Object> login(String username, String password, int expired);
 
     void logout(String ticket);
     LoginTicket findLoginTicket(String ticket);

@@ -28,7 +28,7 @@ class UserMapperTest {
     void insertUser() {
         //username, password, salt, email, type, status, activation_code, header_url, create_time
         UserEntity u = new UserEntity();
-        u.setUserName("zhoujiang");
+        u.setUsername("zhoujiang");
         u.setPassword("123456");
         u.setSalt("abc");
         u.setType(0);

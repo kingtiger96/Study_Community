@@ -19,15 +19,16 @@ class UserServiceImplTest {
     @Test
     void register() {
         UserEntity u = new UserEntity();
-        u.setUserName("zhoujiang");
-        u.setEmail("942433951@qq.com");
-        u.setPassword("20171213zjcan");
+        u.setUsername("kingtiger");
+        u.setEmail("lican01@cqu.edu.com");
+        u.setPassword("19961213lc@@");
+
         userService.register(u);
     }
 
     @Test
     void activation() {
-        UserEntity u = userService.findUserById(1);
+        UserEntity u = userService.findUserById(5);
         System.out.println(userService.activation(u.getId(), u.getActivationCode()));
     }
 }

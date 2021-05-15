@@ -24,7 +24,7 @@ class MailClientTest {
     @Test
     void senMailWithHtml() {
         Context context = new Context();
-        context.setVariable("userName","kingtiger");
+        context.setVariable("username","kingtiger");
         String content = templateEngine.process("/mail/activation.html",context);
         mailClient.senMail("1445079235@qq.com", "汪汪汪", content);
     }

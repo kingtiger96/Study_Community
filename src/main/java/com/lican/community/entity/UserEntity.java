@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserEntity {
     private Integer id;
-    private String userName;
+    private String username;
     private String password;
     private String salt;
     private String email;
@@ -17,9 +17,9 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Integer id, String userName, String password, String salt, String email, Integer type, Integer status, String activationCode, String headerUrl, Date createTime) {
+    public UserEntity(Integer id, String username, String password, String salt, String email, Integer type, Integer status, String activationCode, String headerUrl, Date createTime) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.salt = salt;
         this.email = email;
@@ -38,12 +38,12 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -114,7 +114,7 @@ public class UserEntity {
     public String toString() {
         final StringBuffer sb = new StringBuffer("UserEntity{");
         sb.append("id=").append(id);
-        sb.append(", userName='").append(userName).append('\'');
+        sb.append(", username='").append(username).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", salt='").append(salt).append('\'');
         sb.append(", email='").append(email).append('\'');

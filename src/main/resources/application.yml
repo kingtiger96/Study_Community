@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8080
   servlet:
     context-path: /community
 
@@ -41,5 +41,5 @@ mybatis:
 
 community:
   path:
-    domain: http://localhost:8088
+    domain: http://localhost:8080
     uploadPath: C:/Users/kingtiger/Desktop

@@ -24,6 +24,17 @@
     <sql id="DisscussFields">
         id, user_id, title, content, type, status, create_time, update_time, comment_count, score
     </sql>
+
+    <sql id="InsertDisscussFields">
+        user_id, title, content, type, status, create_time, update_time, comment_count, score
+    </sql>
+
+
+    <insert id="insertDiscussPost">
+        insert into discuss_post(<include refid="InsertDisscussFields"></include>)
+        values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{updateTime},#{commentCount},#{score})
+
+    </insert>
     <select id="selectDiscussPosts" resultMap="DisscussPost">
         select <include refid="DisscussFields"></include> from discuss_post
         where status != 2
@@ -40,5 +51,9 @@
         <if test="userId!=0">
             and user_id = #{userId}
         </if>
+    </select>
+    <select id="selectDiscussPostById" resultMap="DisscussPost">
+        select <include refid="DisscussFields"></include>
+        from discuss_post where id = #{id};
     </select>
 </mapper>

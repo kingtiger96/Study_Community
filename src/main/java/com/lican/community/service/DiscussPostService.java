@@ -8,4 +8,8 @@ public interface DiscussPostService {
     List<DiscussPostEntity> findDiscussPosts(int userId, int offset, int limit);
 
     int findDiscussPostRows(int userId);
+
+    int addDiscussPost(DiscussPostEntity post);
+
+    DiscussPostEntity findDiscussPost(int id);
 }

@@ -57,19 +57,19 @@ public class UserServiceImpl implements UserService, CommunityConstant {
             return map;
         }
 
-        if(StringUtils.isAllBlank(u.getUserName(),u.getPassword(),u.getEmail())){
-            ////logger.info("参数不能为空，用户名，密码，邮箱不能为空为空，userName  ::: {}, password ::: {}, email ::: {}", u.getUserName(), u.getPassword(), u.getEmail());
+        if(StringUtils.isAllBlank(u.getUsername(),u.getPassword(),u.getEmail())){
+            ////logger.info("参数不能为空，用户名，密码，邮箱不能为空为空，username  ::: {}, password ::: {}, email ::: {}", u.getUsername(), u.getPassword(), u.getEmail());
             map.put("msg","用户名，密码，邮箱不能为空!");
             return map;
         }
 
         //验证参数是否已经存在
         //验证用户名
-        UserEntity user1 = userMapper.selectByName(u.getUserName());
+        UserEntity user1 = userMapper.selectByName(u.getUsername());
         System.out.println(user1);
         if(user1!=null) {
-            //logger.info("userName ::: {} 已经存在!", u.getUserName());
-            map.put("msg",String.format("userName ::: %s 已经存在!", u.getUserName()));
+            //logger.info("username ::: {} 已经存在!", u.getUsername());
+            map.put("msg",String.format("username ::: %s 已经存在!", u.getUsername()));
             return map;
         }
 
@@ -112,9 +112,9 @@ public class UserServiceImpl implements UserService, CommunityConstant {
     }
 
     @Override
-    public Map<String, Object> login(String userName, String password, int expired) {
+    public Map<String, Object> login(String username, String password, int expired) {
         Map<String, Object> map = new HashMap<>();
-        if(StringUtils.isAllBlank(userName)){
+        if(StringUtils.isAllBlank(username)){
             map.put("usernameMsg","用户名不能为空！");
             return map;
         }
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService, CommunityConstant {
         }
 
         //验证账号
-        UserEntity user = userMapper.selectByName(userName);
+        UserEntity user = userMapper.selectByName(username);
         if(user==null){
             map.put("usernameMsg","该用户不存在！");
             return map;

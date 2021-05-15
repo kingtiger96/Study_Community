@@ -6,7 +6,7 @@
 
     <resultMap id="MyUser" type="com.lican.community.entity.UserEntity">
         <id column="id" property="id"></id>
-        <result column="user_name" property="userName"></result>
+        <result column="user_name" property="username"></result>
         <result column="password" property="password"></result>
         <result column="salt" property="salt"></result>
         <result column="email" property="email"></result>
@@ -30,7 +30,7 @@
     <select id="selectByName" resultMap="MyUser">
         select <include refid="UserFields"></include>
         from user
-        where user_name = #{userName}
+        where user_name = #{username}
     </select>
 
     <select id="selectByEmail" resultMap="MyUser">
@@ -41,7 +41,7 @@
 
     <insert id="insertUser">
         insert into user (user_name, password, salt, email, type, status, activation_code, header_url)
-        values(#{userName}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl})
+        values(#{username}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl})
     </insert>
 
     <update id="updateStatus">
