@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lican.community.mapper.CommentMapper">
+
+    <resultMap id="Comment" type="com.lican.community.entity.Comment">
+        <!--id指定主键列的封装规则,return指定普通列的封装规则
+        column:数据库列名
+        property:对应的javabean属性
+        -->
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="entity_type" property="entityType"/>
+        <result column="entity_id" property="entityId"/>
+        <result column="target_id" property="targetId"/>
+        <result column="content" property="content"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <sql id="selectFields">
+        id, user_id, entity_type, entity_id, target_id, content, status,create_time
+    </sql>
+
+    <sql id="InsertFields">
+        user_id, entity_type, entity_id, target_id, content, status,create_time
+    </sql>
+
+    <insert id="insertComment">
+        insert into comment (<include refid="InsertFields"></include>)
+        values (#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime})
+    </insert>
+    <select id="selectCommentByEntity" resultMap="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where status = 0
+        and entity_type = #{entityType}
+        and entity_id = #{entityId}
+        order by create_time asc
+        limit #{offset}, #{limit}
+    </select>
+    <select id="selectCountByEntity" resultType="java.lang.Integer">
+        select count(id)
+        from comment
+        where status = 0
+          and entity_id = #{entityId}
+          and entity_type = #{entityType}
+    </select>
+
+
+</mapper>

@@ -1,9 +1,13 @@
 package com.lican.community.controller;
 
+import com.lican.community.entity.Comment;
 import com.lican.community.entity.DiscussPostEntity;
+import com.lican.community.entity.Page;
 import com.lican.community.entity.UserEntity;
 import com.lican.community.service.DiscussPostService;
 import com.lican.community.service.UserService;
+import com.lican.community.service.CommentService;
+import com.lican.community.utils.CommunityConstant;
 import com.lican.community.utils.CommunityUtils;
 import com.lican.community.utils.HostHolder;
 
@@ -14,14 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequestMapping("/discuss")
-public class DiscussPostController {
+public class DiscussPostController implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
 
@@ -30,6 +33,9 @@ public class DiscussPostController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -52,14 +58,53 @@ public class DiscussPostController {
     }
 
     @RequestMapping(path = "/detail/{discussPostId}", method = RequestMethod.GET)
-    @ResponseBody
-    public String addDiscussPost(@PathVariable("discussPostId") int discussPostId, Model model){
+
+    public String getDiscussPost(@PathVariable("discussPostId") int discussPostId, Page page, Model model){
         DiscussPostEntity post = discussPostService.findDiscussPost(discussPostId);
         model.addAttribute("post",post);
 
         UserEntity user = userService.findUserById(post.getUserId());
         model.addAttribute("user",user);
 
-        return post.toString()+user.toString();
+        page.setLimit((5));
+        page.setPath("/discuss/detail"+discussPostId);
+        page.setRows(post.getCommentCount());
+        //给帖子的评论
+        List<Comment> commentList = commentService.findCommentsByEntity(ENTITY_TYPE_POST, post.getId(), page.getOffset(), page.getLimit());
+        List<Map<String,Object>> commentVoList = new ArrayList<>();
+        for(Comment comment : commentList) {
+            Map<String, Object> commentVo = new HashMap<>();
+            //评论
+            commentVo.put("comment", comment);
+            //作者
+            commentVo.put("user", userService.findUserById(comment.getUserId()));
+
+
+            //回复
+            List<Comment> replyList = commentService.findCommentsByEntity(ENTITY_TYPE_COMMENT, comment.getId(), 0, Integer.MAX_VALUE);
+            List<Map<String,Object>> replyVoList = new ArrayList<>();
+            for(Comment reply : replyList) {
+                Map<String, Object> replyVo = new HashMap<>();
+                //回复
+                replyVo.put("reply", reply);
+                //作者
+                replyVo.put("user", userService.findUserById(reply.getUserId()));
+                //回复的目标
+                UserEntity target = reply.getTargetId() == 0 ? null : userService.findUserById(reply.getUserId());
+                replyVo.put("target", target);
+            }
+            commentVo.put("replys",replyVoList);
+
+            int replyCount = commentService.findCommentCount(ENTITY_TYPE_COMMENT, comment.getId());
+
+            commentVo.put("replyCount",replyCount);
+            commentVoList.add(commentVo);
+        }
+
+        model.addAttribute("comments",commentVoList);
+        return "/site/discuss-detail";
     }
+
+
+
 }
