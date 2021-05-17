@@ -34,6 +34,12 @@ spring:
   thymeleaf:
     cache: false
 
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+
+
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
