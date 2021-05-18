@@ -20,7 +20,7 @@
     <update id="updateStatus">
         update login_ticket
         set status = #{status}
-        where ticket = # ticket
+        where ticket = #{ticket}
     </update>
 
     <select id="selectLoginTicket" resultMap="MyTicket">
