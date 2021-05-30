@@ -9,6 +9,7 @@ public class CookieUtil {
             throw new IllegalArgumentException("参数为空");
         }
         Cookie[] cookies = request.getCookies();
+        if(cookies==null) return null;
         for(Cookie cookie:cookies){
             if(cookie.getName().equalsIgnoreCase(name)){
                 return cookie.getValue();
