@@ -30,7 +30,7 @@ public class HomeController implements CommunityConstant {
     private LikeService likeService;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
-    public String getIndexPage(Model model, Page page){
+    public String getIndexPage(Model model, Page<DiscussPostEntity> page){
         page.setRows(discussPostService.findDiscussPostRows(0));
         page.setPath("/index");
 

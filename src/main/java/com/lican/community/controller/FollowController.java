@@ -1,5 +1,6 @@
 package com.lican.community.controller;
 
+import com.lican.community.entity.DiscussPostEntity;
 import com.lican.community.entity.Event;
 import com.lican.community.entity.Page;
 import com.lican.community.entity.UserEntity;
@@ -66,7 +67,7 @@ public class FollowController implements CommunityConstant {
 
     @RequestMapping(path = "/followees/{userId}", method = RequestMethod.GET)
 
-    public String getFollowees(@PathVariable("userId") int userId, Page page, Model model){
+    public String getFollowees(@PathVariable("userId") int userId, Page<DiscussPostEntity> page, Model model){
         UserEntity user = userService.findUserById(userId);
         if(user==null){
             throw new RuntimeException("该用户不存在");
@@ -93,7 +94,7 @@ public class FollowController implements CommunityConstant {
 
     @RequestMapping(path = "/followers/{userId}", method = RequestMethod.GET)
 
-    public String getFollowers(@PathVariable("userId") int userId, Page page, Model model){
+    public String getFollowers(@PathVariable("userId") int userId, Page<DiscussPostEntity> page, Model model){
         UserEntity user = userService.findUserById(userId);
         if(user==null){
             throw new RuntimeException("该用户不存在");

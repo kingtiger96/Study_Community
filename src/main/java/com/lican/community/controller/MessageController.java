@@ -1,6 +1,7 @@
 package com.lican.community.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lican.community.entity.DiscussPostEntity;
 import com.lican.community.entity.Message;
 import com.lican.community.entity.Page;
 import com.lican.community.entity.UserEntity;
@@ -9,7 +10,6 @@ import com.lican.community.service.UserService;
 import com.lican.community.utils.CommunityConstant;
 import com.lican.community.utils.CommunityUtils;
 import com.lican.community.utils.HostHolder;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.*;
-import java.util.concurrent.SynchronousQueue;
 
 @Controller
 public class MessageController implements CommunityConstant {
@@ -32,7 +31,7 @@ public class MessageController implements CommunityConstant {
 
     //私信列表
     @RequestMapping(path = "/letter/list", method = RequestMethod.GET)
-    public String getLetterList(Model model, Page page){
+    public String getLetterList(Model model, Page<DiscussPostEntity> page){
         UserEntity user = hostHolder.getUser();
         page.setLimit(5);
         page.setPath("/letter/list");
@@ -66,7 +65,7 @@ public class MessageController implements CommunityConstant {
     }
 
     @GetMapping("/letter/detail/{conversationId}")
-    public String getLetterDetail(Model model, @PathVariable("conversationId") String conversationId, Page page) {
+    public String getLetterDetail(Model model, @PathVariable("conversationId") String conversationId, Page<DiscussPostEntity> page) {
         //分页信息
         page.setLimit(5);
         page.setPath("/letter/detail/" + conversationId);
@@ -238,7 +237,7 @@ public class MessageController implements CommunityConstant {
     }
 
     @GetMapping("/notice/detail/{topic}")
-    public String getNoticesDetail(@PathVariable("topic") String topic, Page page, Model model) {
+    public String getNoticesDetail(@PathVariable("topic") String topic, Page<DiscussPostEntity> page, Model model) {
         UserEntity user = hostHolder.getUser();
         page.setLimit(5);
         page.setPath("/notice/detail/" + topic);

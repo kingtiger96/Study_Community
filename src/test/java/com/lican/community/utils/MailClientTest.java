@@ -1,12 +1,12 @@
 package com.lican.community.utils;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 @SpringBootTest
 class MailClientTest {

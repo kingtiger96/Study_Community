@@ -1,6 +1,8 @@
 package com.lican.community.utils;
 
 public class RedisKeyUtil {
+
+
     private  static final String SPLIT = ":";
     private static final String PREFIX_ENTITY_LIKE = "like:entity";
     private static final String PREFIX_USER_LIKE = "like:user";
@@ -9,6 +11,8 @@ public class RedisKeyUtil {
     private static final String PREFIX_KAPTCHA = "kaptcha";
     private static final String PREFIX_TICKET = "ticket";
     private static final String PREFIX_USER = "user";
+    private static final String PERFIX_UV = "uv";
+    public static final String PERFIX_DAU = "dau";
 
 
 
@@ -46,7 +50,29 @@ public class RedisKeyUtil {
         return PREFIX_TICKET+SPLIT+ticket;
     }
 
+    //用户
     public static String getUserKey(int userId){
         return PREFIX_USER+SPLIT+userId;
     }
+
+    //单日UV
+    public static String getUVKey(String date){
+        return PERFIX_UV+SPLIT+date;
+    }
+
+    //区间UV
+    public static String getUVKey(String startDate, String endDate) {
+        return PERFIX_UV + SPLIT + startDate + SPLIT + endDate;
+    }
+
+    //单日活跃用户
+    public static String getDAUKey(String date) {
+        return PERFIX_DAU + SPLIT + date;
+    }
+
+    //区间活跃用户
+    public static String getDAUKey(String startDate, String endDate) {
+        return PERFIX_DAU + SPLIT + startDate + SPLIT + endDate;
+    }
+
 }

@@ -30,7 +30,7 @@
     </sql>
 
 
-    <insert id="insertDiscussPost">
+    <insert id="insertDiscussPost" keyProperty="id">
         insert into discuss_post(<include refid="InsertDisscussFields"></include>)
         values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{updateTime},#{commentCount},#{score})
 

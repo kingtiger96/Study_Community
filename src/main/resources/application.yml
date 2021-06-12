@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8080
   servlet:
     context-path: /community
 
@@ -8,7 +8,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/community
+    url: jdbc:mysql://localhost:3306/community?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
     password: 19961213lc@@
     type: com.alibaba.druid.pool.DruidDataSource
@@ -45,6 +45,11 @@ spring:
       enable-auto-commit: true
       auto-commit-interval: 3000
 
+  data:
+    elasticsearch:
+      cluster-name: community
+      cluster-nodes: 127.0.0.1:9300
+
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
@@ -52,5 +57,5 @@ mybatis:
 
 community:
   path:
-    domain: http://localhost:8082
+    domain: http://localhost:8080
     uploadPath: C:/Users/kingtiger/Desktop

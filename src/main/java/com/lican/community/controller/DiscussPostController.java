@@ -1,9 +1,7 @@
 package com.lican.community.controller;
 
-import com.lican.community.entity.Comment;
-import com.lican.community.entity.DiscussPostEntity;
-import com.lican.community.entity.Page;
-import com.lican.community.entity.UserEntity;
+import com.lican.community.entity.*;
+import com.lican.community.event.EventProducer;
 import com.lican.community.service.DiscussPostService;
 import com.lican.community.service.LikeService;
 import com.lican.community.service.UserService;
@@ -41,6 +39,9 @@ public class DiscussPostController implements CommunityConstant {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String addDiscussPost(String title, String content){
@@ -58,12 +59,20 @@ public class DiscussPostController implements CommunityConstant {
 
         discussPostService.addDiscussPost(post);
 
+        //触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
+
         return CommunityUtils.getJSONString(0, "发送成功");
     }
 
     @RequestMapping(path = "/detail/{discussPostId}", method = RequestMethod.GET)
 
-    public String getDiscussPost(@PathVariable("discussPostId") int discussPostId, Page page, Model model){
+    public String getDiscussPost(@PathVariable("discussPostId") int discussPostId, Page<DiscussPostEntity> page, Model model){
         DiscussPostEntity post = discussPostService.findDiscussPost(discussPostId);
         model.addAttribute("post",post);
 

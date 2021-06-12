@@ -1,6 +1,6 @@
 package com.lican.community.entity;
 
-public class Page {
+public class Page<DiscussPostEntity> {
     //当前页码
     private int current = 1;
 
