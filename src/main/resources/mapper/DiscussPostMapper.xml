@@ -21,6 +21,19 @@
         <result column="score" property="score"/>
     </resultMap>
 
+    <parameterMap id="DiscussPostParam" type="com.lican.community.entity.DiscussPostEntity">
+        <parameter property="id"></parameter>
+        <parameter property="userId"></parameter>
+        <parameter property="title"></parameter>
+        <parameter property="content"></parameter>
+        <parameter property="type"></parameter>
+        <parameter property="status"></parameter>
+        <parameter property="createTime"></parameter>
+        <parameter property="updateTime"></parameter>
+        <parameter property="commentCount"></parameter>
+        <parameter property="score"></parameter>
+    </parameterMap>
+
     <sql id="DisscussFields">
         id, user_id, title, content, type, status, create_time, update_time, comment_count, score
     </sql>
@@ -30,7 +43,7 @@
     </sql>
 
 
-    <insert id="insertDiscussPost" keyProperty="id">
+    <insert id="insertDiscussPost" parameterType="com.lican.community.entity.DiscussPostEntity" useGeneratedKeys="true" keyProperty="id">
         insert into discuss_post(<include refid="InsertDisscussFields"></include>)
         values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{updateTime},#{commentCount},#{score})
 
@@ -41,13 +54,36 @@
         update discuss_post set comment_count = #{commentCount}
         where id = #{id}
     </update>
+
+
+    <update id="updateType">
+        update discuss_post set type = #{type} where id = #{id}
+    </update>
+
+
+    <update id="updateStatus">
+        update discuss_post set status = #{status} where id = #{id}
+    </update>
+
+    <update id="updateScore">
+        update discuss_post set score = #{score} where id = #{id}
+    </update>
+
+
     <select id="selectDiscussPosts" resultMap="DisscussPost">
         select <include refid="DisscussFields"></include> from discuss_post
         where status != 2
         <if test="userId!=0">
             and user_id = #{userId}
         </if>
-        order by type desc, create_time desc
+        <if test="orderMode==0">
+            order by type desc, create_time desc
+        </if>
+
+        <if test="orderMode==1">
+            order by type desc, score desc, create_time desc
+        </if>
+
         limit #{offset}, #{limit}
     </select>
 
@@ -58,8 +94,13 @@
             and user_id = #{userId}
         </if>
     </select>
+
     <select id="selectDiscussPostById" resultMap="DisscussPost">
         select <include refid="DisscussFields"></include>
         from discuss_post where id = #{id};
+    </select>
+
+    <select id="findMaxId" resultType="java.lang.Integer">
+        select max(id) from discuss_post;
     </select>
 </mapper>

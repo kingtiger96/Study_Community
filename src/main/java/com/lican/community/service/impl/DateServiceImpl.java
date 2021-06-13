@@ -26,7 +26,7 @@ public class DateServiceImpl implements DateService {
 
     @Override
     public void recordUV(String ip) {
-        String redisKey = RedisKeyUtil.getUVKey(df.format(df));
+        String redisKey = RedisKeyUtil.getUVKey(df.format(new Date()));
         redisTemplate.opsForHyperLogLog().add(redisKey,ip);
     }
 

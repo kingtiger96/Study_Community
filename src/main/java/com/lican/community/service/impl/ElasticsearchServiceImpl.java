@@ -22,6 +22,7 @@ import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPa
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.SearchResultMapper;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,28 +38,24 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
 
-
-    @Override
-    public void saveDiscussPost(DiscussPostEntity post) {
-        discussPostRepository.save(post);
+    public void saveDiscussPost(DiscussPostEntity discussPost) {
+        discussPostRepository.save(discussPost);
     }
 
-    @Override
     public void deleteDiscussPost(int id) {
         discussPostRepository.deleteById(id);
     }
 
-    @Override
-    public  Page<DiscussPostEntity> searchDiscussPost(String keyword, int current, int limit) {
-        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.multiMatchQuery(keyword,"title","content"))
+    public Page<DiscussPostEntity> searchDiscussPost(String keyword, int current, int limit){
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(QueryBuilders.multiMatchQuery(keyword, "title", "content"))
                 .withSort(SortBuilders.fieldSort("type").order(SortOrder.DESC))
                 .withSort(SortBuilders.fieldSort("score").order(SortOrder.DESC))
                 .withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC))
-                .withPageable(PageRequest.of(current,limit))
+                .withPageable(PageRequest.of(current, limit))
                 .withHighlightFields(
                         new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>"),
-                        new HighlightBuilder.Field("content").postTags("<em>").postTags("</em>")
+                        new HighlightBuilder.Field("content").preTags("<em>").postTags("</em>")
                 ).build();
 
         //searchResponse得到结果
@@ -114,6 +111,5 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
                         hits.getTotalHits(),response.getAggregations(), response.getScrollId(),hits.getMaxScore());
             }
         });
-
     }
 }

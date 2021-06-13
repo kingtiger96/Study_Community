@@ -12,7 +12,9 @@ public class RedisKeyUtil {
     private static final String PREFIX_TICKET = "ticket";
     private static final String PREFIX_USER = "user";
     private static final String PERFIX_UV = "uv";
-    public static final String PERFIX_DAU = "dau";
+    private static final String PERFIX_DAU = "dau";
+    public static final String PERFIX_POST = "post";
+
 
 
 
@@ -75,4 +77,7 @@ public class RedisKeyUtil {
         return PERFIX_DAU + SPLIT + startDate + SPLIT + endDate;
     }
 
+    public static String getPostScoreKey(){
+        return PERFIX_POST + SPLIT + "score";
+    }
 }

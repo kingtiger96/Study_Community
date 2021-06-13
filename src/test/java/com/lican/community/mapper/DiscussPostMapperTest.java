@@ -22,6 +22,6 @@ class DiscussPostMapperTest {
 
     @Test
     void selectDiscussPostRows() {
-        List<DiscussPostEntity> list = discussPostMapper.selectDiscussPosts(0,1,10);
+        List<DiscussPostEntity> list = discussPostMapper.selectDiscussPosts(0,1,10,0);
     }
 }

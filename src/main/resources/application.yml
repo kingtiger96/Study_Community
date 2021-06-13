@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8088
   servlet:
     context-path: /community
 
@@ -50,6 +50,10 @@ spring:
       cluster-name: community
       cluster-nodes: 127.0.0.1:9300
 
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: communityScheduler
+
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
@@ -57,5 +61,11 @@ mybatis:
 
 community:
   path:
-    domain: http://localhost:8080
+    domain: http://localhost:8088
     uploadPath: C:/Users/kingtiger/Desktop
+
+
+caffeine:
+  posts:
+    max-size: 1
+    expire-secondes: 180

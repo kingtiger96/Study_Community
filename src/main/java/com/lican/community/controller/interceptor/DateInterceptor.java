@@ -22,7 +22,7 @@ public class DateInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //统计UV
-        String  ip = request.getRemoteHost();
+        String ip = request.getRemoteHost();
         dateService.recordUV(ip);
 
         //统计DAU

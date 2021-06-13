@@ -52,7 +52,7 @@ public class DiscussPostRepositoryTest {
 
     @Test
     public void testInsertList(){
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(5,0,3));
+        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(5,0,3,0));
     }
 
     @Test
